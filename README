@@ -1,0 +1,4 @@
+rfsgpio
+
+rfsgpio is a library to use the hardware interfaces GPIO and PWM in linux.
+It is implemented used the sysfs interface that the kernel provides.
