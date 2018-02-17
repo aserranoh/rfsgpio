@@ -132,7 +132,7 @@ am__uninstall_files_from_dir = { \
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(includedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 librfsgpio_la_LIBADD =
-am_librfsgpio_la_OBJECTS = gpio.lo pwm.lo
+am_librfsgpio_la_OBJECTS = gpio.lo pwm.lo sysfs.lo
 librfsgpio_la_OBJECTS = $(am_librfsgpio_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -318,7 +318,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 ACLOCAL_AMFLAGS = -I m4
 lib_LTLIBRARIES = librfsgpio.la
-librfsgpio_la_SOURCES = gpio.c pwm.c
+librfsgpio_la_SOURCES = gpio.c pwm.c sysfs.c sysfs.h
 include_HEADERS = rfsgpio.h
 all: all-am
 
@@ -400,6 +400,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gpio.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/pwm.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sysfs.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
