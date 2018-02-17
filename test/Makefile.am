@@ -1,0 +1,9 @@
+ACLOCAL_AMFLAGS = -I m4
+check_PROGRAMS = testgpio testpwm
+testgpio_SOURCES = testgpio.c
+testgpio_CFLAGS = -I$(top_srcdir)/src
+testgpio_LDADD = $(top_builddir)/src/librfsgpio.la
+testpwm_SOURCES = testpwm.c
+testpwm_CFLAGS = -I$(top_srcdir)/src
+testpwm_LDADD = $(top_builddir)/src/librfsgpio.la
+TESTS = testgpio testpwm

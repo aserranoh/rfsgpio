@@ -1,0 +1,9 @@
+Makefile
+*.o
+*.lo
+*.log
+*.la
+.deps
+.libs
+*.tar.gz
+test-driver
