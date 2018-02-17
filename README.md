@@ -74,6 +74,7 @@ closed and the previous descriptor doesn't make sense anymore.
 ```c
 #include <err.h>
 #include <poll.h>
+#include <stdio.h>
 #include <rfsgpio.h>
 
 int main() {
@@ -147,7 +148,7 @@ superuser.
 
 ## Authors
 
-**Antonio Serrano Hernandex**.
+**Antonio Serrano Hernandez**.
 
 ## License
 
