@@ -87,6 +87,9 @@ rfs_gpio_open(struct gpio_t *gpio, enum gpio_direction_t direction)
     snprintf(gpio->edge_file, RFS_GPIO_FILENAME_MAX_LEN, RFS_GPIO_EDGE_FILE,
         gpio->pin);
 
+    // Initialize the fd of the value file
+    gpio->fd = -1;
+
     // Export the pin, if necessary
     if (!(gpio->flags & RFS_DONT_EXPORT)) {
         snprintf(pinstr, RFS_MAX_SYSFS_STR, "%hhu", gpio->pin);
@@ -168,11 +171,21 @@ rfs_gpio_get_edge(struct gpio_t *gpio)
 int
 rfs_gpio_get_poll_descriptors(struct gpio_t *gpio, struct pollfd *descriptors)
 {
-    close(gpio->fd);
-    gpio->fd = open(gpio->value_file, O_RDONLY | O_SYNC);
+    char dummy;
+
+    if (gpio->fd >= 0) {
+        close(gpio->fd);
+    }
+    gpio->fd = open(gpio->value_file, O_RDONLY);
     if (gpio->fd < 0) {
         return -1;
     }
+    // The next line is necessary because otherwise poll returns allways
+    // immediately, but I don't really understand why...
+    if (read(gpio->fd, &dummy, 1) <= 0) {
+        return -1;
+    }
+    // Fill the poll descriptor struct
     descriptors->fd = gpio->fd;
     descriptors->events = POLLPRI | POLLERR;
     return 0;
@@ -191,7 +204,9 @@ rfs_gpio_get_value(struct gpio_t *gpio)
 {
     char valstr[RFS_MAX_SYSFS_STR];
 
-    close(gpio->fd);
+    if (gpio->fd >= 0) {
+        close(gpio->fd);
+    }
     if (read_sysfs_file(gpio->value_file, valstr, RFS_MAX_SYSFS_STR)) {
         return -1;
     }
@@ -268,7 +283,9 @@ rfs_gpio_set_value(struct gpio_t *gpio, enum gpio_value_t value)
         errno = EINVAL;
         return -1;
     }
-    close(gpio->fd);
+    if (gpio->fd >= 0) {
+        close(gpio->fd);
+    }
     // Write the direction value
     if (write_sysfs_file(gpio->value_file, gpio_value_str[value]))
     {
@@ -294,7 +311,9 @@ rfs_gpio_close(struct gpio_t *gpio)
 
     // Close the file descriptor of the value file in case was opened for
     // polling purposes
-    close(gpio->fd);
+    if (gpio->fd >= 0) {
+        close(gpio->fd);
+    }
     if (rfs_gpio_set_direction(gpio, RFS_GPIO_IN)) {
         return -1;
     }
