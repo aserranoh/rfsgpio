@@ -34,13 +34,13 @@
 #define RFS_PWM_FILENAME_MAX_LEN    50
 
 // Type that represents a GPIO pin number
-typedef unsigned char gpio_pin_t;
+typedef unsigned int gpio_pin_t;
 
 // Type that represents a PWM chip number
-typedef unsigned char pwm_chip_t;
+typedef unsigned int pwm_chip_t;
 
 // Type that represents a PWM channel number
-typedef unsigned char pwm_channel_t;
+typedef unsigned int pwm_channel_t;
 
 // Type that represents a PWM signal period or duty cycle time
 typedef int pwm_time_t;
