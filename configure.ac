@@ -1,4 +1,4 @@
-AC_INIT([rfsgpio], [0.1-p1], [toni.serranoh@gmail.com])
+AC_INIT([rfsgpio], [0.2], [toni.serranoh@gmail.com])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_PROG_CC
 AC_CONFIG_FILES([
